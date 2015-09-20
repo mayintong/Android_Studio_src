@@ -364,11 +364,11 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
     }
     //PeopleToShow
     private void parseLocation(Map args, final int type) {
-        int positionX[],positionY[],i;
-        String[] tmp;
+//        int positionX[],positionY[],i;
+        //String[] tmp;
         Log.d(DEBUG_TAG, "parseLocation type: " + type);
-        positionX = new int[args.size()];
-        positionY = new int[args.size()];
+//        positionX = new int[args.size()];
+//        positionY = new int[args.size()];
         String TempPosition[];
         //mapid = args.get("MapId");//HttpUtil.parseJsonsdouble(args,BLConstants.ARG_POSITION,BLConstants.ARG_MAP_ID);
 //        for (i = 0;i<args.length;i++) {
