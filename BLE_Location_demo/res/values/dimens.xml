@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- 自定义常量 -->
+    <dimen name="top_bar_height">45dp</dimen>
+    <dimen name="bottom_bar_height">60dp</dimen>
+    <dimen name="top_goback_width">60dp</dimen>
+    <dimen name="top_gonext_width">60dp</dimen>
+
+    <dimen name="popmenu_width">105.0dip</dimen>
+    <dimen name="popmenu_yoff">3.0dip</dimen>
+    <dimen name="dip2pix">1.0dip</dimen>
+
+</resources>

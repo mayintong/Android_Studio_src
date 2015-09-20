@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ACTIVITY_ENTRY_NAME/ACTIVITY_ENTRY_NAME.iml" filepath="$PROJECT_DIR$/ACTIVITY_ENTRY_NAME/ACTIVITY_ENTRY_NAME.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android_Studio_src.iml" filepath="$PROJECT_DIR$/Android_Studio_src.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BLE_Location_demo/BLE_Location_demo.iml" filepath="$PROJECT_DIR$/BLE_Location_demo/BLE_Location_demo.iml" />
+    </modules>
+  </component>
+</project>

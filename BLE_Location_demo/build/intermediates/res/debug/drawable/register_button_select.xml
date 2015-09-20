@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:state_focused="true" android:drawable="@drawable/bg_button_pressed"/>
+	<item android:state_pressed="true" android:drawable="@drawable/bg_button_pressed"/>
+	<item android:drawable="@drawable/bg_button"/>
+</selector><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/drawable/register_button_select.xml -->

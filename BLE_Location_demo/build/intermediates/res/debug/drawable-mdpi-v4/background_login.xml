@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+	<gradient 
+		android:startColor="#FFACDAE5"
+		android:endColor="#FF72CAE1"
+		android:angle="45"
+	/>
+</shape><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/drawable-mdpi/background_login.xml -->

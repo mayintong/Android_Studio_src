@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
+
+
+	<ImageView
+    	    android:id="@+id/login_image"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_marginTop="60dp"
+    	    android:src="@drawable/login_userimage" />
+
+  <!-- padding 内边距   layout_margin 外边距
+  		android:layout_alignParentTop 布局的位置是否处于顶部 -->
+
+	<RelativeLayout
+			android:id="@+id/login_div"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:padding="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+			android:layout_marginTop="30dp"
+			>
+			
+
+			<!-- 账号 -->
+
+			<EditText 
+				android:id="@+id/username_edit"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/login_username_hint"
+				android:singleLine="true"
+				android:inputType="text"/>
+			
+		  <!-- 密码 text -->
+
+		  
+		  <EditText 
+		  	android:id="@+id/password_edit"
+		  	android:layout_width="fill_parent"
+		  	android:layout_height="wrap_content"
+		  	android:layout_below="@id/username_edit"
+		  	android:hint="@string/login_pwd_hint"
+		  	android:layout_marginTop="10dp"
+		  	android:singleLine="true"
+		  	android:inputType="textPassword"/>
+		  
+		  	<CheckBox
+	            android:id="@+id/rem_checkbox"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@null"
+	            android:button="@null"
+			  	android:layout_below="@id/password_edit"
+			  	android:layout_alignLeft="@id/password_edit"
+	            android:drawableLeft="@drawable/checkbox_bg"
+	            android:paddingTop="10dp"
+	            android:text="@string/rem_pwd"
+	            android:visibility="gone"
+	            android:textSize="15sp"
+	            android:checked="true"/>
+		  <!-- 登录button -->
+
+		    <Button
+	            android:id="@+id/btn_forget_pwd"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:background="@drawable/login_reg_button"
+	            android:gravity="right|center"
+	            android:paddingLeft="8dp"
+	            android:paddingRight="25dp"
+	            android:text="@string/forget_pwd"
+	            android:textColor="#ffffffff"
+	            android:visibility="gone"
+	            android:textSize="12sp" />
+		    
+		</RelativeLayout>
+
+	    <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="15dp"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_marginTop="50dp" >
+	
+	        <Button
+	            android:id="@+id/btn_login_regist"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:text="@string/register"
+	            android:background="@drawable/login_btn_normal"/>
+
+	      	<Button
+	      	    android:id="@+id/signin_button"
+	      	    android:layout_width="wrap_content"
+	      	    android:layout_height="wrap_content"
+	      	    android:layout_alignParentRight="true"
+	      	    android:layout_alignParentTop="true"
+	      	    android:background="@drawable/login_btn_normal"
+	      	    android:text="@string/login_label_signin" />
+	      	
+	    </RelativeLayout>
+</LinearLayout>
+<!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/layout/login.xml -->

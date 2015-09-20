@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Find Me</string>
+    <string name="login_label_username">Account</string>
+    <string name="login_label_password">Password</string>
+    <string name="login_label_signin">Login</string>
+    <string name="login_username_hint">工号/手机号</string>
+    <string name="rem_pwd">Remember me</string>
+    <string name="forget_pwd">忘记密码？</string>
+    <string name="register">Register</string>
+    <string name="login_pwd_hint">Type your password</string>
+
+    <string name="title_activity_location">LocationActivity</string>
+    <string name="error_bluetooth_not_supported">Do not support bluetooth</string>
+    <string name="ble_not_supported">BLE not support</string>
+
+    <string name="exit_dialog_title">提示</string>
+    <string name="exit_dialog_message">Do you want to exit?</string>
+    <string name="positive_button">Yes</string>
+    <string name="negative_button">No</string>
+    <!-- about_findme.xml using string -->
+    <string name="back">Back</string>
+    <string name="about">About Find Me</string>
+    <string name="about_title">Find Me</string>
+    <string name="version">Version: V 1.0.3</string>
+    <string name="copyright">Copyright: Foxconn. All Rights Reserved.</string>
+
+    <!-- activity_location.xml using string -->
+    <string name="search">Search</string>
+    <string name="search_hint">Please input the key word&#8230;</string>
+
+    <!-- bottom_menu.xml using string -->
+    <string name="me_menu">Me</string>
+    <string name="contact_menu">Contact List</string>
+    <string name="more_menu">More</string>
+
+    <!-- change_password.xml using string -->
+    <string name="changepwd">Change Password</string>
+    <string name="account_text">Account:</string>
+    <string name="account_hint">工号/姓名</string>
+    <string name="oldpwd">Original password:</string>
+    <string name="oldpwd_hint">Old password</string>
+    <string name="newpwd">New password:</string>
+    <string name="newpwd_hint">new password</string>
+    <string name="confirm_newpwd">Confirm password:</string>
+    <string name="submit">Commit</string>
+
+    <!--change_userinfo.xml using string  -->
+    <string name="name">Name:</string>
+    <string name="name_hint">your name</string>
+    <string name="phone">Phone number:</string>
+    <string name="phone_hint">phone number</string>
+    <string name="gender">Gender:</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+
+    <!-- findpwd_byphonenum.xml using string -->
+    <string name="checkcode">Checkcode:</string>
+    <string name="checkcode_hint">checkcode</string>
+    <string name="get_checkcode">Get checkcode</string>
+
+	<!-- register.xml using string -->
+	<string name="register_title">Register</string>
+	<string name="passwd">Password:</string>
+	<string name="passwd_hint">please input your password</string>
+	<string name="confirm_pwd">Confirm Password:</string>
+	<string name="confirmpwd_hint">confirm password</string>
+	
+	<string name="passwd_length">Please input 6&#8211;15 character</string>
+	<string name="passwd_identical">the password your type is not the same</string>
+	<string name="phone_length">Please type correct phone number</string>
+	<string name="email_tip">邮箱不能为空</string>
+	<string name="email_format_error">邮箱格式不正确，请输入邮箱</string>
+	<string name="retain">Retain</string>
+	<string name="second">Second</string>
+	<string name="popmenu_presoninfo">Inform</string>
+	<string name="popmenu_about">About</string>
+	<string name="logout">Logout</string>
+	
+	<string name="addContact">Add Contact</string>
+	<string name="editContact">Edit Contact</string>
+	<string name="inputName">Please input name of the Contact person</string>
+	<string name="inputAccount">Please input account of the Contact person</string>
+	<string name="saveContact">On Saving Contact person</string>
+	<string name="dial">Dial</string>
+	<string name="deleteContact">DeleteContact person</string>
+	<string name="deleteTip">Delete</string>
+	<string name="onDeleting">On Deleting Contact person</string>
+	<string name="saveButton">Save</string>
+	<string name="ContactTitle">Contact</string>
+	<string name="searchContact">Searching Contact person</string>
+	<string name="noContact">No Contact person</string>
+</resources>

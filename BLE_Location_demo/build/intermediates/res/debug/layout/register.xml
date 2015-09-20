@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#e8f0f0">
+
+    <include layout="@layout/title_bar" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollview"
+    android:scrollbars="vertical"
+    android:focusable="false">
+        <LinearLayout
+            android:id="@+id/linearLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" 
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp" 
+                android:background="@drawable/prefresh_list_cutline"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:orientation="vertical"
+                android:background="@drawable/input"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp">
+                    
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="*"
+                        android:textColor="#FF0033"
+                        android:textSize="19sp" />
+			
+                    <TextView
+
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="@string/account_text" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                     <EditText 
+                        android:id="@+id/accountNo_edit" 
+                        android:layout_width="fill_parent" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/account_hint" 
+                        android:background="@null" 
+                        android:singleLine="true"
+                        android:textSize="17sp"/>
+                </LinearLayout>
+
+                <View 
+                    android:layout_height="1dp" 
+                    android:layout_width="fill_parent" 
+                    android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                     
+                     <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="*"
+                        android:textColor="#FF0033"
+                        android:textSize="19sp" />
+                     
+                    <TextView android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="@string/passwd" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText android:id="@+id/regPwd_edit" 
+                        android:layout_width="fill_parent" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/passwd_hint" 
+                        android:background="@null" 
+                        android:textSize="17sp"
+                        android:singleLine="true"
+						android:inputType="textPassword"/>
+                </LinearLayout>
+
+                  <View 
+                    android:layout_height="1dp" 
+                    android:layout_width="fill_parent" 
+                    android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                   
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="*"
+                        android:textColor="#FF0033"
+                        android:textSize="19sp" />
+                    
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="@string/confirm_pwd" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText android:id="@+id/pwdConfirm_edit" 
+                        android:layout_width="fill_parent" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/confirmpwd_hint" 
+                        android:background="@null" 
+                        android:textSize="17sp"
+                        android:singleLine="true"
+						android:inputType="textPassword"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:orientation="vertical"
+                android:background="@drawable/input"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                    
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="*"
+                        android:textColor="#FF0033"
+                        android:textSize="19sp" />
+                    
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="@string/name" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText 
+                        android:id="@+id/name_edit" 
+                        android:layout_width="fill_parent" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/name_hint"
+                        android:background="@null" 
+                        android:singleLine="true"
+                        android:textSize="17sp" />
+
+                    
+                </LinearLayout>
+
+	           <View
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp" 
+	                android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                    
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp" 
+                        android:text="@string/phone" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText android:id="@+id/mobile_edit" 
+                        android:layout_width="fill_parent" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/phone_hint"
+                        android:background="@null" 
+                        android:singleLine="true"
+                        android:textSize="17sp"/>
+                    
+                </LinearLayout>
+                
+                <View
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp"
+	                android:background="@drawable/prefresh_list_cutline"
+	                android:visibility="gone"/>
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_margin="10dp">
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="邮        箱：" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText android:id="@+id/email_edit" 
+                        android:layout_width="fill_parent" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:background="@null"
+                        android:singleLine="true" 
+                        android:textSize="17sp"/>
+                </LinearLayout>
+
+                <View
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp" 
+	                android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp" 
+                        android:text="@string/gender" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                     <RadioGroup 
+                         android:id="@+id/radioGroup" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"
+                         android:orientation="horizontal"
+                         android:layout_marginLeft="20dp">
+					     <RadioButton 
+					         android:layout_width="wrap_content" 
+					         android:layout_height="wrap_content" 
+					         android:id="@+id/radioMale"
+					         android:checked="true"
+					         android:text="@string/male" 
+					         android:textSize="17sp">
+					     </RadioButton>
+					     <RadioButton 
+					         android:layout_width="wrap_content" 
+					         android:layout_height="wrap_content" 
+					         android:id="@+id/radioFemale" 
+					         android:text="@string/female"
+					         android:textSize="17sp"
+					         android:layout_marginLeft="10dp">
+					     </RadioButton>
+					  </RadioGroup>
+                </LinearLayout>
+
+
+                <View 
+                    android:layout_height="1dp" 
+                    android:layout_width="fill_parent" 
+                    android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp" 
+                        android:text="@string/checkcode" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText android:id="@+id/checkCode_edit" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/checkcode_hint"
+                        android:background="@null" 
+                        android:textSize="17sp"
+                        android:singleLine="true"/>
+                    <Button
+                        android:id="@+id/btn_getCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:background="@drawable/blue_button"
+                        android:singleLine="true"
+                        android:text="@string/get_checkcode"
+                        android:textColor="#ffffffff"
+                        android:textSize="12sp" />
+                    <!-- android:lines="1" -->
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_reg"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/register_button_select"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:textSize="19sp"
+                android:text="@string/register_title" />
+        </LinearLayout>
+
+</ScrollView>
+
+</LinearLayout><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/layout/register.xml -->

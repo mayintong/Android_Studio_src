@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#e8f0f0">
+
+    <!--  <include layout="@layout/title_bar" />-->
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal" 
+    android:background="@drawable/login_bg">
+   
+    <Button
+        android:id="@+id/btn_title_left"
+        android:layout_marginRight="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_left_button"
+        android:text="@string/back"
+        android:layout_marginLeft="7px"
+        android:lines="1"
+        android:textSize="12sp"
+        android:textColor="#ffffffff"
+        android:gravity="center_vertical"
+        android:onClick="goBack"/>
+
+     <TextView 
+        android:id="@+id/tv_top_title"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="修改个人信息"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:lines="1"
+        android:textSize="19sp"
+        android:textColor="#ffffffff"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" 
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp" 
+                android:background="@drawable/prefresh_list_cutline"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:orientation="vertical"
+                android:background="@drawable/input"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="@string/name" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText 
+                        android:id="@+id/name_edit" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/name_hint"
+                        android:background="@null" 
+                        android:textSize="17sp"/>
+                </LinearLayout>
+
+	           <View
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp" 
+	                android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="@string/phone" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText android:id="@+id/mobile_edit" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="@string/phone_hint"
+                        android:background="@null" 
+                        android:textSize="17sp"/>
+                </LinearLayout>
+                
+                <View
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp"
+					android:visibility="gone" 
+	                android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_margin="10dp">
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="邮        箱：" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                    <EditText android:id="@+id/email_edit" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginLeft="20dp" 
+                        android:hint="Email"
+                        android:background="@null" 
+                        android:textSize="17sp"/>
+                </LinearLayout>
+
+                <View
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp" 
+	                android:background="@drawable/prefresh_list_cutline"/>
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="@string/gender" 
+                        android:textSize="19sp" 
+                        android:textColor="#000000"/>
+
+                     <RadioGroup 
+                         android:id="@+id/radioGroup" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"
+                         android:orientation="horizontal"
+                         android:layout_marginLeft="20dp">
+					     <RadioButton 
+					         android:layout_width="wrap_content" 
+					         android:layout_height="wrap_content" 
+					         android:id="@+id/radioMale" 
+					         android:text="@string/male" 
+					         android:textSize="17sp"
+					         android:checked="true">
+					     </RadioButton>
+					     <RadioButton 
+					         android:layout_width="wrap_content" 
+					         android:layout_height="wrap_content" 
+					         android:id="@+id/radioFemale" 
+					         android:text="@string/female"
+					         android:textSize="17sp"
+					         android:layout_marginLeft="10dp">
+					     </RadioButton>
+					  </RadioGroup>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_change"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/register_button_select"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:textSize="19sp"
+                android:text="提交" />
+
+        <!--  <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="24dp"
+	        android:layout_marginLeft="42dp"
+	        android:layout_marginRight="42dp" >
+
+		    <Button
+	            android:id="@+id/btn_query"
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:background="@drawable/blue_button"
+	            android:gravity="center"
+	            android:text="查询"
+	            android:textColor="#ffffffff"
+	            android:textSize="15sp" />
+
+	        <Button
+	            android:id="@+id/btn_change"
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:background="@drawable/blue_button"
+	            android:gravity="center"
+	            android:text="修改"
+	            android:textColor="#ffffffff"
+	            android:textSize="15sp" />
+	    </RelativeLayout>-->
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
+<!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/layout/change_userinfo.xml -->

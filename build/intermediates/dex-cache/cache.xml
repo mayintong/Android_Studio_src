@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\libs\pinyin4j-2.5.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="ae353005f973da1cd8545b54354504c2503f6865">
+        <dex dex="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\build\intermediates\pre-dexed\debug\pinyin4j-2.5.0-a4edb675c4e4adc0e59ab8ff48fe826c40087bfe.jar" />
+    </item>
+    <item
+        jar="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\libs\android-support-v4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="efec67655f6db90757faa37201efcee2a9ec3507">
+        <dex dex="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\build\intermediates\pre-dexed\debug\android-support-v4-cb77074876ea0bdbcf861d126b909d316d7470cb.jar" />
+    </item>
+    <item
+        jar="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\libs\gson-2.2.4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8">
+        <dex dex="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\build\intermediates\pre-dexed\debug\gson-2.2.4-8867d820e20a1c30080a782eb729df22f1196394.jar" />
+    </item>
+    <item
+        jar="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\build\intermediates\exploded-aar\Android_Studio_src\ACTIVITY_ENTRY_NAME\unspecified\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="0f759b08df833413edf1f688a2d4a16044548e58">
+        <dex dex="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\build\intermediates\pre-dexed\debug\classes-fb2baf71a40368d8bcf12faf75f4447c8cceb3dd.jar" />
+    </item>
+    <item
+        jar="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\libs\volley.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d57fd9c5dcce9fb775f92d68557370fe891c356b">
+        <dex dex="C:\Users\mayintong\Desktop\室内定位资料\android_test\Android_Studio_src\BLE_Location_demo\build\intermediates\pre-dexed\debug\volley-85ed2450cd8789a1def29cd4587fd419fe6995f0.jar" />
+    </item>
+
+</items>

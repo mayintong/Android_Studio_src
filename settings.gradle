@@ -1,0 +1,1 @@
+include ':BLE_Location_demo', ':ACTIVITY_ENTRY_NAME'

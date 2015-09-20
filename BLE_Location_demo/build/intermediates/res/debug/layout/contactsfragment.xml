@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/bg">
+
+    <FrameLayout 
+        android:id="@+id/top_contacts_layout"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@drawable/title_bar_bg">
+    	
+	   <TextView
+            android:id="@+id/contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20dip"
+            android:text="@string/ContactTitle"
+            />
+
+	   <ImageButton 
+	        android:id="@+id/add_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center"
+            android:background="@drawable/add_contact"
+	       />
+
+    </FrameLayout>
+
+	    <EditText 
+	        android:id="@+id/pb_search_edit"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:drawableLeft="@drawable/pb_search_contacts"
+	        android:background="@drawable/search_bar_edit_pressed"
+	        android:hint="@string/searchContact"
+	        android:textSize="15dip" 
+	        android:textColor="#000000"/> 
+	        
+	
+     <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        
+        <ListView 
+            android:id="@+id/pb_listvew"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           	android:dividerHeight="1dp"
+            android:divider="#d8bfd8"/>
+
+        <TextView 
+            android:id="@+id/pb_letter_notice"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/toast_letter_bg"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/nocontacts_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="20dip"
+            android:text="@string/noContact"
+            android:visibility="gone"/>
+        
+        <com.cogent.contactsfragment.AlphabetScrollBar
+            android:id="@+id/alphabetscrollbar"
+            android:layout_gravity="right"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"/>
+        
+   	 </FrameLayout>
+</LinearLayout>
+<!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/layout/contactsfragment.xml -->

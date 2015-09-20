@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar" />
+	<style name="normalText" parent="@android:style/TextAppearance">
+		<item name="android:textColor">#444</item>
+		<item name="android:textSize">14sp</item>
+	</style>
+
+	<style name="main_bottom_bar_linear">
+	    <item name="android:layout_width">0dp</item>
+	    <item name="android:layout_height">@dimen/bottom_bar_height</item>
+	    <item name="android:layout_weight">1</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:orientation">vertical</item>
+	</style>
+
+    <style name="main_bottom_bar_image">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="main_bottom_bar_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#82858b</item>
+    </style>
+</resources>
