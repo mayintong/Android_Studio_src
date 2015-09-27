@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
+
 import net.yoojia.imagemap.core.Bubble;
 import net.yoojia.imagemap.core.Shape;
 import net.yoojia.imagemap.core.ShapeExtension;
@@ -19,15 +20,14 @@ import net.yoojia.imagemap.support.TranslateAnimation;
  * An HTML map like widget in an Android view controller
  */
 public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtension.OnShapeActionListener,
-        TranslateAnimation.OnAnimationListener
+															 TranslateAnimation.OnAnimationListener
 {
 
     private HighlightImageView highlightImageView;
     private Bubble[] bubble;
     private int bubble_count;
-    private View viewForAnimation;
-    private int view_count;
-
+	private View viewForAnimation;
+    private OnShapeActionListener onShapeActionListener;
     public ImageMap(Context context) {
         this(context,null);
     }
@@ -41,7 +41,9 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
         super(context, attrs, defStyle);
         initialImageView(context);
     }
-
+    public void setOnShapeClickListener( OnShapeActionListener listener){
+        this.onShapeActionListener = listener;
+    }
     private void initialImageView(Context context){
 
         highlightImageView = new HighlightImageView(context);
@@ -49,11 +51,10 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         addView(highlightImageView, params);
         viewForAnimation= new View(context);
-        addView(viewForAnimation,0,0);
+		addView(viewForAnimation,0,0);
         //test
         bubble  = new Bubble[100];
         bubble_count = 0;
-        view_count = 0;
     }
 
     /**
@@ -72,11 +73,11 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
         bubble_count =( bubble_count + 1) % 100;
     }
 
-    /**
-     * 添加Shape，并关联到Bubble的位置
-     * - Add a shape and set reference to the bubble.
-     * @param shape Shape
-     */
+	/**
+	 * 添加Shape，并关联到Bubble的位置
+	 * - Add a shape and set reference to the bubble.
+	 * @param shape Shape
+	 */
     public void addShapeAndRefToBubble(final Shape shape){
         addShape(shape);
         if(bubble_count != 0){
@@ -85,30 +86,30 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
         }
     }
 
-    @Override
-    public void onTranslate (float deltaX, float deltaY) {
-        highlightImageView.moveBy(deltaX, deltaY);
-    }
+	@Override
+	public void onTranslate (float deltaX, float deltaY) {
+		highlightImageView.moveBy(deltaX, deltaY);
+	}
 
     @Override
     public void addShape(Shape shape) {
 
-        float scale = highlightImageView.getScale();
-        shape.onScale(scale);
+		float scale = highlightImageView.getScale();
+		shape.onScale(scale);
 
-        // 将图像中心移动到目标形状的中心坐标上
-        // Move the center point of the image to the target shape center.
-        PointF from = highlightImageView.getAbsoluteCenter();
-        PointF to = shape.getCenterPoint();
-        TranslateAnimation movingAnimation = new TranslateAnimation(from.x,to.x/4,from.y,to.y);
-        movingAnimation.setOnAnimationListener(this);
-        movingAnimation.setInterpolator(new DecelerateInterpolator());
-        movingAnimation.setDuration(500);
-        movingAnimation.setFillAfter(true);
-        viewForAnimation.startAnimation(movingAnimation);
-        PointF offset = highlightImageView.getAbsoluteOffset();
-        shape.onTranslate(offset.x , offset.y);
-        highlightImageView.addShape(shape);
+		// 将图像中心移动到目标形状的中心坐标上
+		// Move the center point of the image to the target shape center.
+		PointF from = highlightImageView.getAbsoluteCenter();
+		PointF to = shape.getCenterPoint();
+		TranslateAnimation movingAnimation = new TranslateAnimation(from.x,to.x/4,from.y,to.y);
+		movingAnimation.setOnAnimationListener(this);
+		movingAnimation.setInterpolator(new DecelerateInterpolator());
+		movingAnimation.setDuration(500);
+		movingAnimation.setFillAfter(true);
+		viewForAnimation.startAnimation(movingAnimation);
+		PointF offset = highlightImageView.getAbsoluteOffset();
+		shape.onTranslate(offset.x , offset.y);
+		highlightImageView.addShape(shape);
 
 
     }
@@ -125,11 +126,11 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
             item.cleanBubbleRelation();
         }
         highlightImageView.clearShapes();
-        if (bubble_count != 0){
-            for (i=0;i<bubble_count;i++) {
+		if (bubble_count != 0){
+			for (i=0;i<bubble_count;i++) {
                 bubble[i].view.setVisibility(View.GONE);
             }
-        }
+		}
         bubble_count = 0;
     }
 

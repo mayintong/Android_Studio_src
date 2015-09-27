@@ -2,13 +2,14 @@ package net.yoojia.imagemap.core;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
+
 import net.yoojia.imagemap.support.ScaleUtility;
 
 public class CircleShape extends Shape {
 	
 	private PointF center;
 	private float radius = 5f;
-
+    private int alpha;
 	public CircleShape(Object tag, int coverColor) {
 		super(tag, coverColor);
 	}
@@ -27,6 +28,7 @@ public class CircleShape extends Shape {
 
         if(coords.length > 2){
             this.radius = coords[2];
+            this.alpha = (int)coords[3];
         }
 
 	}
@@ -42,7 +44,7 @@ public class CircleShape extends Shape {
 
 	@Override
 	public void draw(Canvas canvas) {
-		drawPaint.setAlpha(100);
+		drawPaint.setAlpha(alpha);
 		canvas.drawCircle(center.x, center.y, radius, drawPaint);
 	}
 
@@ -69,12 +71,12 @@ public class CircleShape extends Shape {
     @Override
     public boolean inArea(float x, float y) {
         boolean ret = false;
-        float dx = center.x - Math.abs(x);
-        float dy = center.y - Math.abs(y);
-        float d = (float)Math.sqrt((dx*dx)+(dy*dy));
-        if (d<radius) {
-            ret = true;
-        }
+//        float dx = center.x - Math.abs(x);
+//        float dy = center.y - Math.abs(y);
+//        float d = (float)Math.sqrt((dx*dx)+(dy*dy));
+//        if (d<radius) {
+//            ret = true;
+//        }
         return ret;
     }
 

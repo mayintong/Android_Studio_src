@@ -3,6 +3,7 @@ package net.yoojia.imagemap;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+
 import net.yoojia.imagemap.core.Shape;
 import net.yoojia.imagemap.core.ShapeExtension;
 
@@ -34,7 +35,6 @@ public class HighlightImageView extends TouchImageView implements ShapeExtension
 
     @Override
 	public void addShape(Shape shape){
-
 		shapesCache.put(shape.tag, shape);
 		postInvalidate();
 	}

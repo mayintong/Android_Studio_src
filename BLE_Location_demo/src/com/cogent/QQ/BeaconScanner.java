@@ -160,9 +160,10 @@ private void scanLeDevice() {
 
 
         //Log.i("wifi", RSSList.toString());
-        track_map.put("rss", RSSList.toString());
-        mComm.doVolleyPost(BLConstants.API_TEST5, track_map, Communications.TAG_SINGLE_TRACK);
-        mComm.doVolleyPost("http://192.168.1.103:80/", track_map, Communications.TAG_SINGLE_TRACK);
+        //track_map.put("rss", RSSList.toString());
+        track_map.put("rss", "1,100,100");
+        //mComm.doVolleyPost(BLConstants.API_TEST5, track_map, Communications.TAG_SINGLE_TRACK);
+        mComm.doVolleyPost("http://202.120.36.137:5000/req_rss/", track_map, Communications.TAG_SINGLE_TRACK);
 
 
     } else {

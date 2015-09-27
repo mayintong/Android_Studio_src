@@ -152,9 +152,10 @@ public final class R {
         public static final int top_rightbtn_pressed=0x7f020077;
     }
     public static final class id {
-        public static final int accountNo_edit=0x7f080046;
+        public static final int accountNo_edit=0x7f080047;
         public static final int add_contacts=0x7f08002b;
         public static final int alphabetscrollbar=0x7f080030;
+        public static final int bname=0x7f080042;
         public static final int btnSearch=0x7f080007;
         public static final int btn_byemail=0x7f080032;
         public static final int btn_bymobile=0x7f080031;
@@ -162,13 +163,13 @@ public final class R {
         public static final int btn_forget_pwd=0x7f08003b;
         public static final int btn_getCode=0x7f080035;
         public static final int btn_login_regist=0x7f08003c;
-        public static final int btn_query=0x7f080042;
-        public static final int btn_reg=0x7f080049;
-        public static final int btn_reg_reget=0x7f08004a;
+        public static final int btn_query=0x7f080043;
+        public static final int btn_reg=0x7f08004a;
+        public static final int btn_reg_reget=0x7f08004b;
         public static final int btn_save_contact=0x7f08000e;
         public static final int btn_submit=0x7f08001f;
         public static final int btn_title_left=0x7f080000;
-        public static final int btn_title_right=0x7f08004d;
+        public static final int btn_title_right=0x7f08004e;
         public static final int checkCode_edit=0x7f080034;
         public static final int confrim_newpassword=0x7f08001e;
         public static final int contacts=0x7f08002a;
@@ -189,7 +190,7 @@ public final class R {
         public static final int login_image=0x7f080036;
         public static final int logo=0x7f080041;
         public static final int logo_text=0x7f080003;
-        public static final int main_view_container=0x7f08004c;
+        public static final int main_view_container=0x7f08004d;
         public static final int message_image=0x7f080012;
         public static final int message_layout=0x7f080011;
         public static final int message_text=0x7f080013;
@@ -206,14 +207,14 @@ public final class R {
         public static final int pb_search_edit=0x7f08002c;
         public static final int phoneNo_edit=0x7f080033;
         public static final int popup_view_cont=0x7f08003f;
-        public static final int pwdConfirm_edit=0x7f080048;
+        public static final int pwdConfirm_edit=0x7f080049;
         public static final int radioFemale=0x7f080025;
         public static final int radioGroup=0x7f080023;
         public static final int radioMale=0x7f080024;
-        public static final int regPwd_edit=0x7f080047;
+        public static final int regPwd_edit=0x7f080048;
         public static final int rem_checkbox=0x7f08003a;
         public static final int rlSearchFrameDelete=0x7f080008;
-        public static final int scrollview=0x7f080045;
+        public static final int scrollview=0x7f080046;
         public static final int setting_image=0x7f080018;
         public static final int setting_layout=0x7f080017;
         public static final int setting_text=0x7f080019;
@@ -222,9 +223,9 @@ public final class R {
         public static final int text_title=0x7f08000d;
         public static final int top=0x7f080006;
         public static final int top_contacts_layout=0x7f080029;
-        public static final int tv_reg_reget=0x7f08004b;
-        public static final int tv_show=0x7f080044;
-        public static final int tv_text=0x7f080043;
+        public static final int tv_reg_reget=0x7f08004c;
+        public static final int tv_show=0x7f080045;
+        public static final int tv_text=0x7f080044;
         public static final int tv_top_title=0x7f080001;
         public static final int uid_edt=0x7f08001b;
         public static final int username_edit=0x7f080038;

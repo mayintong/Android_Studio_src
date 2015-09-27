@@ -36,6 +36,7 @@ public interface BLConstants {
     public static final String API_SEND_VERTIFICATION_CODE = URL_Service + "getCaptcha";
     public static final String API_POST_BATCH_TRACK_DATA = URL_Service + "posttrack";
     public static final String API_POST_SINGLE_TRACK_DATA = URL_Service + "postdata";
+    public static final String API_REQ_FRIEND = URL_Service + "req_friend_position/";
 
     // arguments
     public static final String ARG_USER_INFO = "userinfo";
