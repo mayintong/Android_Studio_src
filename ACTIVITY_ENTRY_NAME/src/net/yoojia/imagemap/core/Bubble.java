@@ -1,6 +1,8 @@
 package net.yoojia.imagemap.core;
 
 import android.graphics.PointF;
+import android.os.Build;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ public class Bubble extends FrameLayout{
 		super(view.getContext());
         this.view = view;
         final int wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
-        LayoutParams params = new LayoutParams(wrapContent,wrapContent);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(wrapContent,wrapContent);
         this.view.setLayoutParams(params);
         this.view.setClickable(true);
 		addView(view);
@@ -81,7 +83,7 @@ public class Bubble extends FrameLayout{
          //   view.setX(x);
           //  view.setY(y);
         // }else{
-        LayoutParams params = (LayoutParams) view.getLayoutParams();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
         int left = (int)x;
         int top = (int)y;
         // HTC SDK 2.3.3 Required

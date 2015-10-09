@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/values-zh-rCN/strings.xml -->
+    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/values-zh-rCN/strings.xml -->
     <eat-comment/>
     <string name="ContactTitle">通讯录</string>
     <string name="about">关于Find Me</string>

@@ -38,13 +38,13 @@ public class TouchImageView extends ImageView {
 	/* View鐨勫搴﹀拰楂樺害 */
     private float viewWidth;
 	private float viewHeight;
-
+	public PointF tmpPoint= new PointF();
 	private PointF last = new PointF();
 	private PointF mid = new PointF();
 	private  PointF start = new PointF();
 
 	private float[] matrixValues;
-
+	public float BaseX=0,BaseY=0,BaseScale=(float)1.0/(float)3.0;
 	/* 缁濆鍋忕Щ閲忥細View鍘熺偣涓庡浘鐗囧師鐐圭殑鍋忕Щ閲忥紝鏃犺缂╂斁鎴栬�骞崇Щ锛岃繖瀵瑰�閮借〃杈惧畠浠殑瀹為檯璺濈銆�	 * 娉細浠iew鍜屽浘鐗囩殑宸︿笂瑙掍负鍘熺偣锛屽悜涓嬩负Y杞存鍚戯紝鍚戝彸涓篨杞存鍚戙�
 	 * */
 	private float absoluteOffsetX;
@@ -86,9 +86,9 @@ public class TouchImageView extends ImageView {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
             mScaleDetector.onTouchEvent(event);
-
             fillAbsoluteOffset();
             PointF curr = new PointF(event.getX(), event.getY());
+			tmpPoint = getPoint(curr);
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:
                     mode = DRAG;
@@ -193,13 +193,22 @@ public class TouchImageView extends ImageView {
 		moveBy(deltaX, deltaY);
 	}
 
+	public PointF getPoint(PointF touchPoint){
+		PointF transPoint = new PointF();
+		transPoint.x = (touchPoint.x / BaseScale) + BaseX;
+		transPoint.y = (touchPoint.y / BaseScale) + BaseY;
+		return transPoint;
+	}
 	/**
 	 * 鎻愪氦骞崇Щ鍙樻崲
 	 * @param deltaX 骞崇Щ璺濈X
 	 * @param deltaY 骞崇Щ璺濈Y
 	 */
     protected void postTranslate(float deltaX, float deltaY){
-    	imageUsingMatrix.postTranslate(deltaX, deltaY);
+		BaseX -= deltaX / BaseScale;
+		BaseY -= deltaY / BaseScale;
+
+		imageUsingMatrix.postTranslate(deltaX, deltaY);
     	overLayerMatrix.postTranslate(deltaX, deltaY);
 		fillAbsoluteOffset();
     }
@@ -211,7 +220,14 @@ public class TouchImageView extends ImageView {
 	 * @param scaleCenterY 缂╂斁涓績Y
 	 */
     protected void postScale(float scaleFactor, float scaleCenterX, float scaleCenterY){
-    	imageUsingMatrix.postScale(scaleFactor, scaleFactor, scaleCenterX, scaleCenterY);
+		float scx,scy;
+		scx = scaleCenterX / BaseScale;
+		scy = scaleCenterY / BaseScale;
+		BaseX += (1 - (1/scaleFactor)) * scx;
+		BaseY += (1 - (1/scaleFactor)) * scy;
+		BaseScale *= scaleFactor;
+
+		imageUsingMatrix.postScale(scaleFactor, scaleFactor, scaleCenterX, scaleCenterY);
         overLayerMatrix.postScale(scaleFactor, scaleFactor, scaleCenterX, scaleCenterY);
 		fillAbsoluteOffset();
     }

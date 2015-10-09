@@ -36,7 +36,6 @@ public interface BLConstants {
     public static final String API_SEND_VERTIFICATION_CODE = URL_Service + "getCaptcha";
     public static final String API_POST_BATCH_TRACK_DATA = URL_Service + "posttrack";
     public static final String API_POST_SINGLE_TRACK_DATA = URL_Service + "postdata";
-    public static final String API_REQ_FRIEND = URL_Service + "req_friend_position/";
 
     // arguments
     public static final String ARG_USER_INFO = "userinfo";
@@ -59,11 +58,11 @@ public interface BLConstants {
     public static final String ARG_MAP_URL = "mapurl";
     public static final String ARG_LOCAL_TIME = "localtime";
     public static final String ARG_DEV_MAC = "devicemac";
-
+    
     public static final String ARG_REQ_RESULT = "result";
     public static final String ARG_ERROR_CODE = "error_code";
-
-
+    
+    
     // messages
     public static final String MSG_PASS = "pass";
     public static final String MSG_FAIL_DESC = " fail, ";

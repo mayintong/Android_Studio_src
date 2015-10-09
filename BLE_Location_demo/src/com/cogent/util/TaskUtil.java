@@ -89,7 +89,8 @@ public class TaskUtil {
 
         int bmpWidth = bitmap.getWidth();
         int bmpHeight = bitmap.getHeight();
-        
+        Log.e("bmp size",Integer.toString(bmpHeight)+","+Integer.toString(bmpWidth));
+
         DisplayMetrics metric = new DisplayMetrics();
         WindowManager wm = (WindowManager) App.getContext().getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(metric);
@@ -98,11 +99,14 @@ public class TaskUtil {
         density_dpi = (density * 160)/240;
 
         xdpi = metric.widthPixels;
-        ydpi = metric.heightPixels - 140;
+        ydpi = metric.heightPixels; //used to be -140. (to keep inside the view?
+        Log.e("metric size",Integer.toString(xdpi)+","+Integer.toString(ydpi));
 
         float scaleWidth = ((float)xdpi) / bmpWidth;
-        float scaleHeight = (((float)ydpi)-120) / bmpHeight;
-        scalesize = scaleWidth < scaleHeight ? scaleWidth : scaleHeight;
+        float scaleHeight = (((float)ydpi)) / bmpHeight;
+
+        scalesize = (scaleWidth < scaleHeight) ? scaleWidth : scaleHeight;
+        Log.e("scale size",Float.toString(scaleWidth)+","+Float.toString(scaleHeight)+","+Float.toString(scalesize));
         System.out.println("scalesize" + scalesize);
         
         return scalesize;

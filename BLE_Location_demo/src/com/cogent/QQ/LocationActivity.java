@@ -1,6 +1,7 @@
 package com.cogent.QQ;
 
 import com.android.volley.VolleyError;
+import com.cogent.DataBase.DBUser;
 import com.cogent.util.ContactUtils;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -10,10 +11,8 @@ import net.yoojia.imagemap.ImageMap;
 import net.yoojia.imagemap.core.Bubble;
 import net.yoojia.imagemap.core.CircleShape;
 import net.yoojia.imagemap.core.Lines;
-import net.yoojia.imagemap.core.PolyShape;
-import net.yoojia.imagemap.core.PolygonalLineShape;
 import net.yoojia.imagemap.core.Shape;
-import net.yoojia.imagemap.core.ShapeExtension;
+import net.yoojia.imagemap.core.ThickLines;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -28,9 +27,11 @@ import android.util.Log;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewDebug;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.graphics.drawable.Drawable;
 
 
@@ -41,110 +42,167 @@ import com.cogent.ViewMenu.ViewTabber;
 
 import com.cogent.Communications.BLNotifier;
 import com.cogent.Communications.BLIObserver;
+import com.cogent.util.HttpUtil;
 import com.cogent.util.TaskUtil;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.os.Bundle;
-import android.view.View;
+import com.hp.hpl.sparta.xpath.Step;
+
+import javax.sql.CommonDataSource;
+
+import com.cogent.BLE.BleWrapper;
+import com.cogent.BLE.BleWrapperUiCallbacks;
+import com.cogent.BLE.DeviceListAdapter;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import java.util.ArrayList;
+import android.content.Intent;
+
+
+import static android.os.SystemClock.sleep;
+
 public class LocationActivity extends BaseActivity implements BLIObserver {
     private static final String DEBUG_TAG = "LocationActivity";
     protected static BeaconService mBoundService = null;
     private ImageMap map;
     private Boolean isOnline = true;
-    ViewTabber tabbar;
+	ViewTabber tabbar;
     public Handler mHandler;
 
     private StepCalculater StepCal;
-    private ImageView ivDeleteText;
-    private EditText etSearch;
-    private Button btn_search;
+	private ImageView ivDeleteText;
+	private EditText etSearch;
+	private Button btn_search;
     private DBHelper dbHelper;
     private CircleShape[] black;
-    private int black_count = 0;
     private Lines[] lines;
     private int lines_count = 0;
+    private int black_count = 0;
+
     float scalesize = 1;
-    private int current_map = -1;
-    private int mapid = 0;
+	private int current_map = -1;
+	private int mapid = 0;
     private int cur_x = 0;
     private int cur_y = 0;
     private String cur_rss="0,0,0";
-    public int cnt = 3;
+    public int cnt = 0;
+    private PointF tmpP = new PointF(0.0f,0.0f);
+    private static final int ENABLE_BT_REQUEST_ID = 1;
+    private BleWrapper mBleWrapper = null;
+    private boolean mScanning = false;
+    private DeviceListAdapter mDevicesListAdapter = null;
+    private ArrayList<BluetoothDevice> mDevices;
+    private ArrayList<byte[]> mRecords;
+    private ArrayList<Integer> mRSSIs;
 
-    static public Map  PeopleToShow;
+    public HashMap<String, String> BLEs = new HashMap<String, String>();
 
-    PointF[] tmpp = new PointF[3];
 
-    public class route{
-        PointF[] KeyPoint;
-        int num_KeyPoint;
-        route(PointF[] temp,int num){
-           KeyPoint=new PointF[num];
-            KeyPoint=temp;
-            num_KeyPoint=num;
-        }
 
+    private void bleMissing() {
+        Toast.makeText(this, "BLE Hardware is required but not available!", Toast.LENGTH_LONG).show();
+        finish();
     }
-    route MyRoute;
-    //drawline dline;
+
+    /* handle BLE scan */
+    private void handleFoundDevice(final BluetoothDevice device,
+                                   final int rssi,
+                                   final byte[] scanRecord)
+    {
+        // adding to the UI have to happen in UI thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDevicesListAdapter.addDevice(device, rssi, scanRecord);
+                mDevices = mDevicesListAdapter.GetDevice();
+                mRSSIs = mDevicesListAdapter.GetRSSI();
+                mRecords = mDevicesListAdapter.GetRecord();
+
+                if (TestControl.GetBLEInfoFlag())
+                {
+                    Log.i("test","********************");
+                    for (int index = 0;index < mDevices.size();index++) {
+                        if (mDevices.get(index).getName() != null) {
+                            Log.i("testBLEDevice", mDevices.get(index).getName().toString());
+                        }
+                        else {
+                            Log.i("testBLEDevice", "No name");
+                        }
+                        Log.i("testuuid", mDevices.get(index).getAddress());
+                        if(BLEs.get(mDevices.get(index).getAddress()) == null){
+                            BLEs.put(mDevices.get(index).getAddress(),String.valueOf(mRSSIs.get(index)));
+                        }
+                        else{
+                            if ( Math.abs(Integer.parseInt(BLEs.get(mDevices.get(index).getAddress()))-mRSSIs.get(index))>10 ){
+                                Log.i("test Obj BLE",mDevices.get(index).getAddress() );
+                                BLEs.put(mDevices.get(index).getAddress(),String.valueOf(mRSSIs.get(index)));
+                            }
+                        }
+                        Log.i("testBLERecord",mDevices.get(index).getAddress() + ":" + mRSSIs.get(index).toString());
+                    }
+                }
+                mComm.doVolleyPost(BLConstants.API_TEST5,BLEs, Communications.TAG_SINGLE_TRACK);
+                sleep(1000);
+            }
+        });
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
         Log.d(DEBUG_TAG, "onCreate");
         mBoundService = WelcomeActivity.getBoundService();
+        Log.e("abc","1");
         StepCal = new StepCalculater(this);
-        StepCal.startstep();
+        //StepCal.stopstep();
+        StepCal.startstep(cur_x,cur_y);
+         /* start BLE scan */
+        if (TestControl.GetBLEEnableFlag()) {
+
+            mBleWrapper = new BleWrapper(this, new BleWrapperUiCallbacks.Null() {
+                @Override
+                public void uiDeviceFound(final BluetoothDevice device, final int rssi, final byte[] record) {
+                    handleFoundDevice(device, rssi, record);
+                }
+            });
+
+            // check if we have BT and BLE on board
+            if (mBleWrapper.checkBleHardwareAvailable() == false) {
+                bleMissing();
+            }
+        }
+        Log.e("abc","5");
         WelcomeActivity.registerObserver(this);
-        setContentView(R.layout.tab_view);
-        ContactUtils.init(this);
-        tabbar = new ViewTabber(this);
-        dbHelper = new DBHelper(this);
-        //dline=new drawline(this);
-        //setContentView( dline);
-        lines = new Lines[100];
+		setContentView(R.layout.tab_view);
+		ContactUtils.init(this);
+		tabbar = new ViewTabber(this);
+		dbHelper = new DBHelper(this);
 
-        PeopleToShow=new HashMap();
-
-        PeopleToShow.put("MapId",1);
-        PeopleToShow.put("myttest1","800,1000,"+"Test1");
-        PeopleToShow.put("mytest2","500,500,"+"Test2");
-
-
-        tmpp[0] = new PointF((float)300.0,(float)300.0);
-        tmpp[1] = new PointF((float)200.0,(float)300.0);
-        tmpp[2] = new PointF((float)200.0,(float)400.0);
-
-
-        MyRoute=new route(tmpp,3);
         map = (ImageMap) findViewById(R.id.imagemap);
-        initView();
+		initView();
 
         mHandler=new Handler()
         {
-            public void handleMessage(Message msg)
+            public void handleMessage(Message  msg)
             {
                 switch(msg.what)
                 {
                     case 1:
-                        //map.clearShapes();
-                        Log.e("asbx",""+cnt);
-//                        String[] tmp = new String[100];
-//                        tmp[0] = "0,500,"+cnt+"00";
-//                        tmp[1] = "0,300,"+cnt+"00";
-//                        //tmp[2] = "0,100,"+cnt+"00";
-//                        tmp[2] = 0 + "," + (300 + StepCal.get_step_offset_X() * 10) + "," + (300 + StepCal.get_step_offset_Y() * 10);
-                        //parseLocation(1 + "," + (300 + StepCal.get_step_offset_X() * 10) + "," + (300 + StepCal.get_step_offset_Y() * 10), 2);
-                        PeopleToShow.put("user",(300 + StepCal.get_step_offset_X() * 10) + "," + (300 + StepCal.get_step_offset_Y() * 10)+","+"User");
+                        String[] tmp = new String[1];
+                        if (tmpP != map.highlightImageView.tmpPoint)
+                            StepCal.startstep(0,0);
+                            tmpP = map.highlightImageView.tmpPoint;
+                        tmp[0] = "0,"+ (StepCal.get_step_offset_X()*30+(int)tmpP.x) +","+ (StepCal.get_step_offset_Y()*30+(int)tmpP.y) +",2";
+//                        tmp[0] = "0,"+(StepCal.get_step_offset_X()*30 + 2250) + ","+ (StepCal.get_step_offset_Y()*30 + 800)+",2";
+                        parseLocation(tmp,2);
 
-                        parseLocation(PeopleToShow, 2);
-                        //cnt = (cnt + 1) % 10;
+//                        Log.e("asbx",""+cnt);
+//                        String[] tmp = new String[3];
+//                        tmp[0] = "0,500,"+cnt+"00"+",1";
+//                        tmp[1] = "0,300,"+cnt+"00"+",2";
+//                        tmp[2] = "0,100,"+cnt+"00"+",2";
+//                        parseLocation(tmp, 2);
+//                        cnt = (cnt + 1) % 10;
                         break;
                     default:
                         break;
@@ -157,76 +215,45 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
             @Override
             public void run()
             {
-                int i = 1400;
+                int i = 4;
                 Looper.prepare();
-                isOnline=false;
-                if (isOnline) {
 
-                    SystemClock.sleep(3000);
-                    mBoundService.startScanner();
-                    System.out.println(btn_search.getText().toString().trim());
-                    Map<String, String> query_pos_map = new HashMap<String, String>();
-                    //query_pos_map.put(BLConstants.ARG_USER_ID, etSearch.getText().toString().trim());
-                    query_pos_map.put("rss", etSearch.getText().toString().trim());
-                    mComm.doVolleyPost(BLConstants.API_TEST5, query_pos_map, Communications.TAG_QUERY_POSITION);
-                    mComm.doVolleyPost(BLConstants.API_TEST_CONNECT, null, Communications.TAG_TEST_CONNECT);
-
-                    //parseLocation(mapid+","+100+","+100,2);
-                    // parseLocation(mapid+","+(100+StepCal.get_step_offset_X()*10)+","+(100+StepCal.get_step_offset_Y()*10),2);
-                }
-                else {
-                    while (i-- != 0) {
-                        SystemClock.sleep(1500);
-                        Message message = new Message();
-                        message.what = 1;
-                        mHandler.sendMessage(message);
-                    }
+                while (true) {
+                    sleep(1000);
+                    Message message=new Message();
+                    message.what=1;
+                    mHandler.sendMessage(message);
                 }
             }
         });
         thread.start();
     }
-//    public float[] CreateDrawableLine ( float[] param){
-//        int len=param.length;
-//        float temp[]=new float[len];
-//        float temp0[]=new float[2*len];
-//        int j=2;
-//        if(param[len-1]==param[len-3]){
-//            temp[1]=param[len-1]-5;
-//            temp[0]=param[len-2];}
-//        else{
-//            temp[1]=param[len-1];
-//            temp[0]=param[len-2]-5;
-//        }
-//        for(int i=len-3;i>=3;i--){
-//            temp[j+1]=param[i]-5;
-//            temp[j]=param[i-1]-5;
-//            j++;
-//        }
-//
-//        if(param[1]==param[3]){
-//            temp[len-1]=param[1]-5;
-//            temp[len-2]=param[0];}
-//        else{
-//            temp[param.length-1]=param[1];
-//            temp[param.length-2]=param[0]-5;
-//        }
-//
-//        for(int k=0;k<=param.length-1;k++){
-//            temp0[k]=param[k];
-//            temp[k+param.length]=temp[k];
-//            k++;
-//        }
-//
-//         return temp0;
-//
-//    }
+
     @Override
     public void onResume() {
         super.onResume();
         Log.d(DEBUG_TAG, "onResume");
-        //if (mBoundService != null)
-            //mBoundService.startScan(cur_rss);
+
+        if(mBleWrapper.isBtEnabled() == false) {
+            // BT is not turned on - ask user to make it enabled
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, ENABLE_BT_REQUEST_ID);
+            // see onActivityResult to check what is the status of our request
+        }
+
+        // initialize BleWrapper object
+        mBleWrapper.initialize();
+
+        mDevicesListAdapter = new DeviceListAdapter(this);
+        //setListAdapter(mDevicesListAdapter);
+
+        // Automatically start scanning for devices
+        mScanning = true;
+        // remember to add timeout for scanning to not run it forever and drain the battery
+        mBleWrapper.startScanning();
+
+        if (mBoundService != null)
+            mBoundService.startScan(cur_rss);
     }
 
     @Override
@@ -244,19 +271,18 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
         WelcomeActivity.unregisterObserver(this);
     }
 
-    public void initView() {
-        ivDeleteText = (ImageView) findViewById(R.id.ivDeleteText);
+	public void initView() {
+		ivDeleteText = (ImageView) findViewById(R.id.ivDeleteText);
         //btn_search = (ImageView) findViewById(R.id.btnSearch);
-        btn_search = (Button) findViewById(R.id.btnSearch);
-        btn_search = (Button) findViewById(R.id.btnSearch);
+		btn_search = (Button) findViewById(R.id.btnSearch);
         etSearch = (EditText) findViewById(R.id.etSearch);
 
         ivDeleteText.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-                etSearch.setText("");
-            }
-        });
+			
+			public void onClick(View v) {
+				etSearch.setText("");
+			}
+		});
 
         etSearch.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -278,16 +304,17 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
         });
 
         // set the offline map
-        Drawable d = getResources().getDrawable(R.drawable.register_bg);
+        Drawable d = getResources().getDrawable(R.drawable.floor4_0);
 
         Bitmap OfflineMap = ((BitmapDrawable)d).getBitmap();
         scalesize = TaskUtil.calcScaleSize(OfflineMap);
-        Bitmap resizedBmp = TaskUtil.reSizeBitmap(OfflineMap, scalesize);
+        scalesize *= 1.6;
+        Bitmap resizedBmp  = TaskUtil.reSizeBitmap(OfflineMap, scalesize);
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, os);
         dbHelper.insertOrUpdate(mapid, mapid, "", scalesize, os.toByteArray());
         map.setMapBitmap(resizedBmp);
-
+        lines = new Lines[100];
         black = new CircleShape[100];
 //
 //        Log.e("Step X Y", StepCal.get_step_offset_X() + "," + StepCal.get_step_offset_Y());
@@ -301,14 +328,14 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
                 mComm.doVolleyPost(BLConstants.API_TEST_CONNECT, null, Communications.TAG_TEST_CONNECT);
                 //Log.e("Step Counter", StepCal.getsteps() + "");
                 //test
-                getMapInfo(1);
                 Log.e("Test 001",":"+etSearch.getText().toString().trim()+":");
+
                 if(etSearch.getText().toString().trim()!=null) {
                     String[] tmp = new String[3];
-                    tmp[0] = "0,500,"+etSearch.getText().toString().trim()+"00";
-                    tmp[1] = "0,300,"+etSearch.getText().toString().trim()+"00";
-                    tmp[2] = "0,100,"+etSearch.getText().toString().trim()+"00";
-                    //parseLocation(tmp, 2);
+                    tmp[0] = "0,500,"+etSearch.getText().toString().trim()+"00"+",1";
+                    tmp[1] = "0,300,"+etSearch.getText().toString().trim()+"00"+",2";
+                    tmp[2] = "0,100,"+etSearch.getText().toString().trim()+"00"+",2";
+                    parseLocation(tmp, 2);
                 }
                 else{
                     refreshUI();
@@ -334,15 +361,15 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
                 }
             }
         });
-    }
-
-    public void goBack(View view) {
-        //onBackPressed();
-        //tabbar.switchViewTab(0);
-        tabbar.viewContainer.flipToView(0);
-        tabbar.setViewTab(0);
-    }
-
+	}
+	
+	public void goBack(View view) {
+		//onBackPressed();
+		//tabbar.switchViewTab(0);
+		tabbar.viewContainer.flipToView(0);
+		tabbar.setViewTab(0);
+	}
+    
     class bledevice {
         String devicemac = "";
         int rec_rssi = 0;
@@ -376,7 +403,7 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
             Log.e("Connect Success","=============");
             if(!isOnline)
                 Log.e("Stop Step Calculator", "==================");
-            StepCal.stopstep();
+            //StepCal.stopstep();
             isOnline = true;
         }
         if (tag.equals(Communications.TAG_QUERY_POSITION)) {
@@ -385,8 +412,8 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
                 cur_x = Integer.parseInt(response.split(",")[1]);
                 cur_y = Integer.parseInt(response.split(",")[2]);
                 String[] tmp =  new String[1];
-                tmp[0] =response;
-                //parseLocation(tmp, BLNotifier.TYPE_MANUAL_UPDATE_LOCATION);
+                tmp[0] =response+",1";
+                parseLocation(tmp, BLNotifier.TYPE_MANUAL_UPDATE_LOCATION);
             }
             /*
             if (response.isEmpty()) {
@@ -434,7 +461,7 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
         }
 
     }
-
+    
     public void getMapInfo(final int mapid)
     {
         Log.d(DEBUG_TAG, "Query map by map ID: " + mapid);
@@ -443,17 +470,19 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
         //query_map.put("mapid", mapid+"");
         mComm.doVolleyPost(BLConstants.API_QUERY_MAP_BY_MAPID, query_map, Communications.TAG_QUERY_MAP);
     }
-
+    
     public void downloadMap(final String mapurl){
         Log.d(DEBUG_TAG, "Download map with url: ." + mapurl);
         mComm.doVolleyImageRequest(mapurl, Communications.TAG_DOWNLOAD_MAP);
     }
+
     public void addLine(float sx, float sy, float ex, float ey) {
         lines[lines_count] = new Lines("Lines"+lines_count, 0xFFFF3E96); //Color.BLUE，圆点的颜色
         lines[lines_count].setValues(String.format("%.5f,%.5f,%.5f,%.5f,%.5f",sx*scalesize, sy*scalesize, ex*scalesize, ey*scalesize, 10.0)); //设置圆点的位置和大小
         map.addShape(lines[lines_count]); //加到地图上
         lines_count = (lines_count + 1) % 100;
     }
+
     public void addLines(PointF[] points) {  //  0xFFFF3E96 挺好看的
         int i;
         float t = (float)6.5;
@@ -463,36 +492,6 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
             addCircle(points[i+1].x, points[i+1].y, t, 0xFFFF3E96, "turning_point");
         }
     }
-
-    public void Handle_Route(route tmp){
-        if(tmp.num_KeyPoint>1) {
-//            Log.e("fuck",(300 + StepCal.get_step_offset_X() * 10)+","+(300 + StepCal.get_step_offset_Y() * 10));
-//
-//            Log.e("fuck2",tmp. KeyPoint[1].x+","+tmp. KeyPoint[1].y);
-//            Log.e("fuck3",len+"");
-            if (((300 + StepCal.get_step_offset_X() * 10)>= tmp.KeyPoint[1].x-30 && tmp.KeyPoint[1].x+30>=(300 + StepCal.get_step_offset_X() * 10)) && ((300 + StepCal.get_step_offset_Y() * 10) <= tmp. KeyPoint[1].y+30 &&  tmp. KeyPoint[1].y-30<=(300 + StepCal.get_step_offset_Y() * 10)) ){
-
-                for (int i = 0; i <= tmp.num_KeyPoint - 2; i++) {
-                    tmp. KeyPoint[i] = tmp. KeyPoint[i + 1];
-                }
-               tmp.num_KeyPoint--;
-            }
-            addLines(tmp.KeyPoint);
-        }else{
-//            Log.e("fuck",(300 + StepCal.get_step_offset_X() * 10)+","+(300 + StepCal.get_step_offset_Y() * 10));
-//
-//            Log.e("fuck2",tmp. KeyPoint[1].x+","+tmp. KeyPoint[1].y);
-//            Log.e("fuck3",len+"");
-                if (((300 + StepCal.get_step_offset_X() * 10)>= tmp.KeyPoint[1].x-30 && tmp.KeyPoint[1].x+30>=(300 + StepCal.get_step_offset_X() * 10)) && ((300 + StepCal.get_step_offset_Y() * 10) <= tmp. KeyPoint[1].y+30 &&  tmp. KeyPoint[1].y-30<=(300 + StepCal.get_step_offset_Y() * 10)) ) {
-                    Toast.makeText(getApplicationContext(), "已找到好友！",
-                            Toast.LENGTH_SHORT).show();
-                }else{return;}
-            }
-
-
-        }
-
-
 //    public void addLine(double sx, double sy, double ex, double ey) {
 //        lines[lines_count] = new ThickLines("Lines"+black_count, Color.BLUE); //Color.BLUE，圆点的颜色
 //        lines[lines_count].setValues(String.format("%.5f,%.5f,%.5f,%.5f",sx*scalesize, sy*scalesize, ex*scalesize, ey*scalesize)); //设置圆点的位置和大小
@@ -513,52 +512,36 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
         black_count = (black_count + 1) % 100;
     }
 
-
-
-
-
-
-//    public boolean showPostion(double x, double y){ //该方法可以实现一个圆点，用于和bubble进行绑定，并且最终显示在地图上
-//        black[black_count] = new CircleShape("No"+black_count, Color.TRANSPARENT); //Color.BLUE，圆点的颜色
-//
-//        black[black_count].setValues(String.format("%.5f,%.5f,15",x*scalesize,y*scalesize)); //设置圆点的位置和大小
-//        map.addShapeAndRefToBubble(black[black_count]); //加到地图上
-//        black_count = (black_count + 1) % 100;
-//        return true;
-//    }
     public boolean showPostion(double x, double y){ //该方法可以实现一个圆点，用于和bubble进行绑定，并且最终显示在地图上
-
         addCircle((float)x , (float)y, (float)15, Color.BLACK, "position");
         return true;
     }
 
-    //PeopleToShow
-    private void parseLocation(Map args, final int type) {
-//        int positionX[],positionY[],i;
-        //String[] tmp;
+    //参数arg string中格式为 "mapid,x,y,用户类型"  用户类型1表示本人，2表示其他人
+    private void parseLocation(String[] args, final int type) {
+        int positionX[], positionY[], i, Usertype[];
+        String[] tmp;
         Log.d(DEBUG_TAG, "parseLocation type: " + type);
-//        positionX = new int[args.size()];
-//        positionY = new int[args.size()];
-        String Temp[];
-        mapid = Integer.parseInt(args.get("MapId").toString());//HttpUtil.parseJsonsdouble(args,BLConstants.ARG_POSITION,BLConstants.ARG_MAP_ID);
-//        for (i = 0;i<args.length;i++) {
-//            tmp = args[i].split(",");
-//            positionX[i] = Integer.parseInt(tmp[1]);//HttpUtil.parseJsonsdouble(args,BLConstants.ARG_POSITION,BLConstants.ARG_POSITION_X);
-//            positionY[i] = Integer.parseInt(tmp[2]);//HttpUtil.parseJsonsdouble(args,BLConstants.ARG_POSITION,BLConstants.ARG_POSITION_Y);
-//
-//        }
-
-
-
-            /*
-            if (type == BLNotifier.TYPE_AUTO_UPDATE_LOCATION) {
-                String messages = HttpUtil.parseJson(args[0], BLConstants.ARG_POSITION_MSG);
-                if (!messages.isEmpty())
-                    showNotification(messages);
-            }
-            */
-        Log.e("Map id =", String.valueOf(mapid));
-        Log.e("Cur_Map id =", String.valueOf(current_map));
+        positionX = new int[args.length];
+        positionY = new int[args.length];
+        Usertype = new int[args.length];
+        tmp = args[0].split(",");
+        mapid = Integer.parseInt(tmp[0]);//HttpUtil.parseJsonsdouble(args,BLConstants.ARG_POSITION,BLConstants.ARG_MAP_ID);
+        for (i = 0;i<args.length;i++) {
+            tmp = args[i].split(",");
+            positionX[i] = Integer.parseInt(tmp[1]);//HttpUtil.parseJsonsdouble(args,BLConstants.ARG_POSITION,BLConstants.ARG_POSITION_X);
+            positionY[i] = Integer.parseInt(tmp[2]);//HttpUtil.parseJsonsdouble(args,BLConstants.ARG_POSITION,BLConstants.ARG_POSITION_Y);
+            Usertype[i] = Integer.parseInt(tmp[3]);
+        }
+        /*
+        if (type == BLNotifier.TYPE_AUTO_UPDATE_LOCATION) {
+            String messages = HttpUtil.parseJson(args[0], BLConstants.ARG_POSITION_MSG);
+            if (!messages.isEmpty())
+                showNotification(messages);
+        }
+        */
+        Log.e("Map id =",String.valueOf(mapid));
+        Log.e("Cur_Map id =",String.valueOf(current_map));
         if (mapid != current_map )//&& mapid != 0)
         {
             current_map = mapid;
@@ -575,83 +558,57 @@ public class LocationActivity extends BaseActivity implements BLIObserver {
                 map.setMapBitmap(findmap);
             }
         }
-
-        map.setOnShapeClickListener(new ShapeExtension.OnShapeActionListener() {
-            @Override
-            public void onShapeClick(Shape shape, float xOnImage, float yOnImage) {
-                String msg = "Shape " + shape.tag + " clicked !";
-                Log.e("wewe", "qweqweqweqwe");
-                Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
-//显示toast信息
-                toast.show();
-            }
-        });
-//        float[] pts={50,50,400,50,
-//               400,600,
-//                50,600,
-//               50,595,395,595,395,45,50,55   };
-
         map.clearShapes();
 
-        Handle_Route(MyRoute);
+        for(i = 0;i <args.length;i++) {
+            /*
+            if (i == args.length) {
 
+                View bubble = getLayoutInflater().inflate(R.layout.popup, null);
+                map.setBubbleView(bubble,new Bubble.RenderDelegate() {
+                    @Override
+                    public void onDisplay(Shape shape, View bubbleView) {
+                        ImageView logo = (ImageView) bubbleView.findViewById(R.id.logo); //通过bubbleView得到相应的控件
+                        if (type == BLNotifier.TYPE_AUTO_UPDATE_LOCATION)
+                            logo.setImageResource(R.drawable.location_icon_purple);
+                        else if (type == BLNotifier.TYPE_MANUAL_UPDATE_LOCATION)
+                            logo.setImageResource(R.drawable.location_icon_yellow);
+                    }
+                });
+                Log.e("Position Showing", 10000 + " , " + 10000);
+                showPostion(700.0,700.0);
+                break;
 
-//        PolygonalLineShape red = new PolygonalLineShape("red", Color.BLACK);
-//        red.setValues(pts);
-//        map.addShape(red);
+            }
+            */
 
-//        Shape orange = new PolyShape("orange",0xff8226);
-//        //orange.setValues(CreateDrawableLine(pts));
-//        orange.setValues(pts);
-//        map.addShape(orange);
-        for (Object key: args.keySet() ) {
-            if(key=="MapId") continue;
-            Temp= args.get(key).toString().split(",");
-            //final String text=Temp[2];
-            Log.e("text",Temp[2]);
-            final String text=Temp[2];
+            //内部类型应用需要final变量，不可修改
+            final int k = Usertype[i];
 
-
-                /*
-                if (i == args.length) {
-
-                    View bubble = getLayoutInflater().inflate(R.layout.popup, null);
-                    map.setBubbleView(bubble,new Bubble.RenderDelegate() {
-                        @Override
-                        public void onDisplay(Shape shape, View bubbleView) {
-                            ImageView logo = (ImageView) bubbleView.findViewById(R.id.logo); //通过bubbleView得到相应的控件
-                            if (type == BLNotifier.TYPE_AUTO_UPDATE_LOCATION)
-                                logo.setImageResource(R.drawable.location_icon_purple);
-                            else if (type == BLNotifier.TYPE_MANUAL_UPDATE_LOCATION)
-                                logo.setImageResource(R.drawable.location_icon_yellow);
-                        }
-                    });
-                    Log.e("Position Showing", 10000 + " , " + 10000);
-                    showPostion(700.0,700.0);
-                    break;
-
-                }
-                */
             View bubble = getLayoutInflater().inflate(R.layout.popup, null);
-
-            map.setBubbleView(bubble, new Bubble.RenderDelegate() {
-                @Override
-                public void onDisplay(Shape shape, View bubbleView) {
-                    ImageView logo = (ImageView) bubbleView.findViewById(R.id.logo); //通过bubbleView得到相应的控件
-                    TextView name = (TextView) bubbleView.findViewById(R.id.bname);
-                    name.setText(text);
-                    if (type == BLNotifier.TYPE_AUTO_UPDATE_LOCATION)
-                        logo.setImageResource(R.drawable.location_icon_purple);
-                    else if (type == BLNotifier.TYPE_MANUAL_UPDATE_LOCATION)
-                        logo.setImageResource(R.drawable.location_icon_yellow);
+            map.setBubbleView(bubble,new Bubble.RenderDelegate() {
+            @Override
+            public void onDisplay(Shape shape, View bubbleView) {
+            ImageView logo = (ImageView) bubbleView.findViewById(R.id.logo); //通过bubbleView得到相应的控件
+            if (k == BLNotifier.TYPE_SELF)
+                logo.setImageResource(R.drawable.location_icon_purple);
+            else if (k == BLNotifier.TYPE_OTHERS)
+                logo.setImageResource(R.drawable.location_icon_yellow);
                 }
             });
+            Log.e("Position Showing", positionX[i] + " , " + positionY[i]);
 
-
-            //Log.e("Position Showing", positionX[i] + " , " + positionY[i]);
-            showPostion(Integer.parseInt(Temp[0]),Integer.parseInt(Temp[1]));
+            PointF[] tmpp = new PointF[5];
+            tmpp[0] = new PointF((float)100.0,(float)100.0);
+            tmpp[1] = new PointF((float)200.0,(float)200.0);
+            tmpp[2] = new PointF((float)200.0,(float)800.0);
+            tmpp[3] = new PointF((float)500.0,(float)800.0);
+            tmpp[4] = new PointF((float)500.0,(float)300.0);
+            //addLines(tmpp);
+            showPostion(positionX[i], positionY[i]);
         }
     }
+    @Override
 
     public void onBLUpdate(int notificationType, String args) {
         /*switch (notificationType) {

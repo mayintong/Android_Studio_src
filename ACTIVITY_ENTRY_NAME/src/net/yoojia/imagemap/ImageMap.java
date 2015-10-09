@@ -4,14 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import net.yoojia.imagemap.core.Bubble;
 import net.yoojia.imagemap.core.Shape;
 import net.yoojia.imagemap.core.ShapeExtension;
 import net.yoojia.imagemap.support.TranslateAnimation;
+
+import static android.os.SystemClock.sleep;
 
 
 /**
@@ -23,11 +27,11 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
 															 TranslateAnimation.OnAnimationListener
 {
 
-    private HighlightImageView highlightImageView;
+    public HighlightImageView highlightImageView;
     private Bubble[] bubble;
     private int bubble_count;
 	private View viewForAnimation;
-    private OnShapeActionListener onShapeActionListener;
+
     public ImageMap(Context context) {
         this(context,null);
     }
@@ -41,9 +45,7 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
         super(context, attrs, defStyle);
         initialImageView(context);
     }
-    public void setOnShapeClickListener( OnShapeActionListener listener){
-        this.onShapeActionListener = listener;
-    }
+
     private void initialImageView(Context context){
 
         highlightImageView = new HighlightImageView(context);
@@ -99,14 +101,16 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
 
 		// 将图像中心移动到目标形状的中心坐标上
 		// Move the center point of the image to the target shape center.
-		PointF from = highlightImageView.getAbsoluteCenter();
-		PointF to = shape.getCenterPoint();
-		TranslateAnimation movingAnimation = new TranslateAnimation(from.x,to.x/4,from.y,to.y);
-		movingAnimation.setOnAnimationListener(this);
-		movingAnimation.setInterpolator(new DecelerateInterpolator());
-		movingAnimation.setDuration(500);
-		movingAnimation.setFillAfter(true);
-		viewForAnimation.startAnimation(movingAnimation);
+
+//		PointF from = highlightImageView.getAbsoluteCenter();
+//		PointF to = shape.getCenterPoint();
+//		TranslateAnimation movingAnimation = new TranslateAnimation(from.x,to.x,from.y,to.y);
+//		movingAnimation.setOnAnimationListener(this);
+//		movingAnimation.setInterpolator(new DecelerateInterpolator());
+//		movingAnimation.setDuration(500);
+//		movingAnimation.setFillAfter(true);
+//		viewForAnimation.startAnimation(movingAnimation);
+
 		PointF offset = highlightImageView.getAbsoluteOffset();
 		shape.onTranslate(offset.x , offset.y);
 		highlightImageView.addShape(shape);
@@ -136,18 +140,20 @@ public class ImageMap extends FrameLayout implements ShapeExtension,ShapeExtensi
 
     @Override
     public final void onShapeClick(Shape shape, float xOnImage, float yOnImage) {
-        int i;
-        for(Shape item : highlightImageView.getShapes()){
-            item.cleanBubbleRelation();
-        }
-        if(bubble_count != 0){
-            for (i=0;i<bubble_count;i++){
-                bubble[i].showAtShape(shape);
-            }
+//        int i;
+//        for(Shape item : highlightImageView.getShapes()){
+//            item.cleanBubbleRelation();
+//        }
+//        if(bubble_count != 0){
+//            for (i=0;i<bubble_count;i++){
+//                bubble[i].showAtShape(shape);
+//            }
+//
+//        }
 
-        }
+        Toast.makeText(this.getContext(), "已找到好友！",
+                Toast.LENGTH_SHORT).show();
     }
-
     /**
      * set a bitmap for image map.
      * @param bitmap image

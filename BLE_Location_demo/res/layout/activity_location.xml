@@ -41,12 +41,6 @@
 		        	android:paddingLeft="32dp"
 		        	android:textSize="12sp"
 		        	android:hint="@string/search_hint"/>
-			<TextView android:id="@+id/name"
-				android:layout_gravity="center_vertical"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"/>
-
-
 
 		    	<ImageView android:id="@+id/ivDeleteText"
 		    	    android:layout_width="wrap_content"
@@ -58,13 +52,13 @@
 		    	    android:visibility="gone"/>        
         </RelativeLayout>
     </RelativeLayout>
-    
+
+
     <net.yoojia.imagemap.ImageMap
         android:id="@+id/imagemap"
         android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
+        android:layout_height="wrap_content"
+		android:scaleType="fitXY"/>
 
 </RelativeLayout>

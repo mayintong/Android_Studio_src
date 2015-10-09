@@ -7,10 +7,9 @@ package net.yoojia.imagemap.core;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-
 import net.yoojia.imagemap.support.ScaleUtility;
 
-public class RectShape extends Shape {
+public class RectShape extends Shape{
 
     private float left;
     private float top;
@@ -57,7 +56,7 @@ public class RectShape extends Shape {
         left = leftTop.x;
         top = leftTop.y;
 
-        PointF righBottom = ScaleUtility.scaleByPoint(right, bottom, centerX, centerY, scale);
+        PointF righBottom = ScaleUtility.scaleByPoint(right,bottom,centerX,centerY,scale);
         right = righBottom.x;
         bottom = righBottom.y;
     }

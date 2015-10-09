@@ -6,17 +6,16 @@
     android:orientation="vertical" >
 
 
-	<ImageView
+    	<ImageView
     	    android:id="@+id/login_image"
     	    android:layout_width="fill_parent"
     	    android:layout_height="wrap_content"
     	    android:layout_marginTop="60dp"
     	    android:src="@drawable/login_userimage" />
-
+    	
   <!-- padding 内边距   layout_margin 外边距
   		android:layout_alignParentTop 布局的位置是否处于顶部 -->
-
-	<RelativeLayout
+		<RelativeLayout
 			android:id="@+id/login_div"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
@@ -29,14 +28,14 @@
 
 			<!-- 账号 -->
 
-			<EditText 
+			<EditText
 				android:id="@+id/username_edit"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:hint="@string/login_username_hint"
 				android:singleLine="true"
 				android:inputType="text"/>
-			
+
 		  <!-- 密码 text -->
 
 		  
@@ -89,7 +88,7 @@
 	        android:layout_marginLeft="15dp"
 	        android:layout_marginRight="15dp"
 	        android:layout_marginTop="50dp" >
-	
+
 	        <Button
 	            android:id="@+id/btn_login_regist"
 	            android:layout_width="wrap_content"
@@ -109,4 +108,4 @@
 	      	
 	    </RelativeLayout>
 </LinearLayout>
-<!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/layout/login.xml -->
+<!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/layout/login.xml -->

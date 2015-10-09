@@ -3,6 +3,12 @@ package net.yoojia.imagemap.core;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.os.Build;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import net.yoojia.imagemap.support.ScaleUtility;
 

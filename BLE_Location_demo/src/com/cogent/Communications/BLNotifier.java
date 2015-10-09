@@ -16,6 +16,8 @@ public class BLNotifier {
     public final static int TYPE_UPDATE_NETWORK = 0;
     public final static int TYPE_AUTO_UPDATE_LOCATION = 1;
     public final static int TYPE_MANUAL_UPDATE_LOCATION = 2;
+    public final static int TYPE_SELF = 1;
+    public final static int TYPE_OTHERS = 2;
     public final static int TYPE_BLE_NOT_SUPPORT = 3;
     public final static int TYPE_BLE_NOT_ENABLED = 4;
     

@@ -3,7 +3,6 @@ package net.yoojia.imagemap.core;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.PointF;
-
 import net.yoojia.imagemap.support.ScaleUtility;
 
 import java.util.ArrayList;

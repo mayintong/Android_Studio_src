@@ -1,0 +1,9 @@
+diff a/android_test/Android_Studio_src/BLE_Location_demo/src/com/cogent/QQ/LocationActivity.java b/android_test/Android_Studio_src/BLE_Location_demo/src/com/cogent/QQ/LocationActivity.java	(rejected hunks)
+@@ -139,7 +139,6 @@
+     public void onResume() {
+         super.onResume();
+         Log.d(DEBUG_TAG, "onResume");
+-            // BT is not turned on - ask user to make it enabled
+         if (mBoundService != null)
+             mBoundService.startScan(cur_rss);
+     }

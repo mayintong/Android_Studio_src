@@ -40,7 +40,7 @@ public class Communications {
     public static final String TAG_SINGLE_TRACK = "Single Track";
     public static final String TAG_BATCH_TRACK = "Batch Track";
     public static final String TAG_TEST_CONNECT = "test_connect";
-
+    
     private String mCookie;
     private Object mtag;
 
@@ -58,7 +58,7 @@ public class Communications {
         public void onErrorResponse(String tag, VolleyError volleyError);
     }
     private ErrorResponseListener mErrorListener;
-
+    
     public Communications(Object tag) {
         mtag = tag;
     }
@@ -74,14 +74,14 @@ public class Communications {
     public void setOnErrorResponseListener(ErrorResponseListener listener) {
         mErrorListener = listener;
     }
-
+    
     /**
      * Login
      * @param params API params
      * @param tag tag what you have set, otherwise will be default
      */
     public void doVolleyLogin(final Map<String, String> params, final String tag) {
-        StringRequest request = new StringRequest(Request.Method.POST,
+         StringRequest request = new StringRequest(Request.Method.POST,
                 BLConstants.API_LOGIN,
                 new Response.Listener<String>() {
                     @Override
@@ -92,13 +92,13 @@ public class Communications {
 
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                if (mListener != null) {
-                    mErrorListener.onErrorResponse(tag == null ? TAG_LOGIN : tag, volleyError);
-                }
-            }
-        }) {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        if (mListener != null) {
+                            mErrorListener.onErrorResponse(tag == null ? TAG_LOGIN : tag, volleyError);
+                        }
+                    }
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -128,11 +128,9 @@ public class Communications {
     public void doVolleyGet(String url, final String tag) {
         doVolleyRequest(Request.Method.GET, url, null, tag);
     }
-
+    
     public void doVolleyPost(String url, final Map<String, String> params, final String tag) {
-        Log.i("connect", "try volleypost");
         doVolleyRequest(Request.Method.POST, url, params, tag);
-
     }
 
     /**
@@ -144,7 +142,6 @@ public class Communications {
      */
     public void doVolleyRequest(int method, String url, final Map<String, String> params, final String tag) {
         updateCookie();
-        Log.i("connect", "try volleyrequest");
         StringRequest request = new StringRequest(
                 method,
                 url,
@@ -158,15 +155,15 @@ public class Communications {
                         Log.e(tag,s);
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
 
-                if (mListener != null) {
-                    mErrorListener.onErrorResponse(tag, volleyError);
-                }
+                        if (mListener != null) {
+                            mErrorListener.onErrorResponse(tag, volleyError);
+                        }
 
-            }
-        }) {
+                    }
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -195,14 +192,14 @@ public class Communications {
                 },
                 0, 0, Bitmap.Config.ARGB_8888,
                 new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
 
-                        if (mListener != null) {
-                            mErrorListener.onErrorResponse(tag, volleyError);
-                        }
-                    }
-                }) {
+                if (mListener != null) {
+                    mErrorListener.onErrorResponse(tag, volleyError);
+                }
+            }
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();

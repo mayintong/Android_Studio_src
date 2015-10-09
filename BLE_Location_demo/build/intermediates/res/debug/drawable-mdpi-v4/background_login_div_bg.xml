@@ -5,4 +5,4 @@
 	注意：	bottomRightRadius是左下角而不是右下角  bottomLeftRadius右下角-->
 	<corners android:topLeftRadius="10dp" android:topRightRadius="10dp"
 		android:bottomRightRadius="10dp" android:bottomLeftRadius="10dp"/>
-</shape><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/drawable-mdpi/background_login_div_bg.xml -->
+</shape><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/drawable-mdpi/background_login_div_bg.xml -->

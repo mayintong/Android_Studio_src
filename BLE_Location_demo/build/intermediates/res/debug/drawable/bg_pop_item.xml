@@ -5,4 +5,4 @@
     <item android:drawable="@drawable/bg_pop_pressed" android:state_enabled="true" android:state_focused="true"/>
     <item android:drawable="@android:color/transparent"/>
 
-</selector><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/drawable/bg_pop_item.xml -->
+</selector><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/drawable/bg_pop_item.xml -->

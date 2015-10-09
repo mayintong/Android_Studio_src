@@ -3,4 +3,4 @@
 
 
     <item android:state_selected="true" android:drawable="@drawable/bottom_select_bg"></item>
-</selector><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/drawable/home_bottom_style.xml -->
+</selector><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/drawable/home_bottom_style.xml -->

@@ -2,8 +2,8 @@ package net.yoojia.imagemap;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.PointF;
 import android.util.AttributeSet;
-
 import net.yoojia.imagemap.core.Shape;
 import net.yoojia.imagemap.core.ShapeExtension;
 
@@ -28,7 +28,6 @@ public class HighlightImageView extends TouchImageView implements ShapeExtension
 	
 	private Map<Object,Shape> shapesCache = new HashMap<Object, Shape>();
     private OnShapeActionListener onShapeClickListener;
-
     public void setOnShapeClickListener(OnShapeActionListener onShapeClickListener){
         this.onShapeClickListener = onShapeClickListener;
     }
@@ -86,10 +85,12 @@ public class HighlightImageView extends TouchImageView implements ShapeExtension
         }
     }
 
+
+
     @Override
 	protected void postScale(float scaleFactor, float scaleCenterX,float scaleCenterY) {
-		super.postScale(scaleFactor, scaleCenterX, scaleCenterY);
-		if(scaleFactor != 0){
+        super.postScale(scaleFactor, scaleCenterX, scaleCenterY);
+        if(scaleFactor != 0){
             for(Shape shape : shapesCache.values()){
                 if(scaleFactor != 0){
                     shape.onScale(scaleFactor, scaleCenterX, scaleCenterY);

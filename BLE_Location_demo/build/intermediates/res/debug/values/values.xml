@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/values/colors.xml -->
     <eat-comment/>
     <color name="black">#000000</color>
     <color name="blue">#4DB4E8</color>
@@ -10,7 +10,7 @@
     <color name="link_color">#FF0066CC</color>
     <color name="simiple_button_color">#FFF</color>
     <color name="white">#ffffff</color>
-    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="bottom_bar_height">60dp</dimen>
     <dimen name="dip2pix">1.0dip</dimen>
@@ -19,7 +19,7 @@
     <dimen name="top_bar_height">45dp</dimen>
     <dimen name="top_goback_width">60dp</dimen>
     <dimen name="top_gonext_width">60dp</dimen>
-    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/values/strings.xml -->
     <eat-comment/>
     <string name="ContactTitle">Contact</string>
     <string name="about">About Find Me</string>
@@ -94,7 +94,7 @@
     <string name="submit">Commit</string>
     <string name="title_activity_location">LocationActivity</string>
     <string name="version">Version: V 1.0.3</string>
-    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/values/style.xml -->
+    <!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/values/style.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar"/>
     <style name="main_bottom_bar_image">

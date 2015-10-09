@@ -13,7 +13,6 @@ import com.cogent.QQ.BeaconService;
 public class BLBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Intent startServiceIntent = new Intent(context, BeaconService.class);
         context.startService(startServiceIntent);
     }

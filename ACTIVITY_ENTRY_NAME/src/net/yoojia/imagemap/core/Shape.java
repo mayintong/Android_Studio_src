@@ -1,10 +1,6 @@
 package net.yoojia.imagemap.core;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
+import android.graphics.*;
 
 public abstract class Shape {
 

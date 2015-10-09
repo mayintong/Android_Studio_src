@@ -70,16 +70,9 @@ public class WelcomeActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        StepCal = new StepCalculater(this);
-//        StepCal.startstep();
-        Log.e("XOXOXOXOX", "这里还好1");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Log.e("XOXOXOXOX", "这里还好2");
         setContentView(R.layout.main);
-        Log.e("XOXOXOXOX", "这里还好3");
         startBindServiceThread();
-        Log.e("XOXOXOXOX", "这里还好4");
     }
 
     private void startBindServiceThread() {

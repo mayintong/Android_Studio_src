@@ -38,52 +38,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.cogent.ContentObserver.ContactsContentObserver;
 import com.cogent.DataBase.DBUser.Contact;
-import com.cogent.QQ.BaseActivity;
-import com.cogent.QQ.LocationActivity;
 import com.cogent.QQ.R;
 import com.cogent.contactsfragment.AlphabetScrollBar.OnTouchingLetterChangedListener;
 import com.cogent.contactsfragment.SortCursor.SortEntry;
 import com.cogent.util.ContactProvider;
 import com.cogent.util.ContactUtils;
-import java.util.Map;
-import java.util.HashMap;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
-import android.bluetooth.BluetoothDevice;
-//import android.bluetooth.BluetoothManager;
-import android.content.pm.PackageManager;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.wifi.WifiManager;
-import android.util.Log;
 
-import com.android.volley.VolleyError;
-import java.text.SimpleDateFormat;
-
-import com.cogent.Communications.RequestManager;
-import com.cogent.util.HttpUtil;
-import com.cogent.Communications.BLNotifier;
-import com.cogent.DataBase.BLConstants;
-import com.cogent.Communications.Communications;
-
-//package com.example.adr_client;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-import android.net.wifi.WifiManager;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
-
-
-public class LoadContactList extends BaseActivity {
+public class LoadContactList {
 	private Activity mContext;
 		//字母列视图View
 		private AlphabetScrollBar m_asb;
@@ -120,56 +81,10 @@ public class LoadContactList extends BaseActivity {
 		//删除搜索文本图标
 		ImageView deleteText;
 	public LoadContactList(Activity context) {
-		mComm = new Communications(this);
-		mComm.setOnResponseListener(this);
-		mComm.setOnErrorResponseListener(this);
 		mContext = context;
 	}
-
-	@Override
-	public void refreshUI(){}
-	@Override
-	public void onImageResponse(String tag, Bitmap response) {}
-	@Override
-	public void onSuccess(String tag, String response) {
-		if (tag.equals(Communications.TAG_SINGLE_TRACK)) {
-
-			BLNotifier.notifyUi(BLNotifier.TYPE_AUTO_UPDATE_LOCATION, response);
-		}
-
-	}
-	@Override
-	public void onResponse(String tag, String response) {
-		//Log.d(DEBUG_TAG, "TAG:" + tag + "---Response:" + response);
-
-
-        String result = HttpUtil.parseJson(response, "friend");
-		String[] pos = result.split(";");
-		Log.e("llllllllllllllll",pos.length-1+"");
-		for(int i=0;i<=pos.length-1;i++) {
-			String[] temp_info = pos[i].split(",");
-			Log.e("friend",temp_info[0]+","+temp_info[1]+','+temp_info[2]);
-			//LocationActivity.PeopleToShow.put(temp_info[0], 800 + "," + temp_info[2] + "0" + "," + temp_info[0]);
-			LocationActivity.PeopleToShow.put(temp_info[0], temp_info[1] + "," + temp_info[2] + "," + temp_info[0]);
-		}
-//        Boolean parse_result = result.equals(BLConstants.MSG_PASS);
-//
-//        if (parse_result)
-//            onSuccess(tag, response);
-//        else
-//            onFail(tag, response);
-
-	}
-
-	@Override
-	public void onFail(String tag, String response) {
-//		if (tag.equals(Communications.TAG_SINGLE_TRACK)) {
-//			int error_code = HttpUtil.parseJsonint(response, BLConstants.ARG_ERROR_CODE);
-//			String error_descrip = tag + BLConstants.MSG_FAIL_DESC + HttpUtil.parse_error(error_code);
-//			System.out.println(error_descrip);
-//		}
-	}
-public void showContactList()  {
+	
+public void showContactList() {
 		initView();
 		ContactsCO = new ContactsContentObserver(new Handler());  
 		mContext.getContentResolver().registerContentObserver(ContactProvider.CONTENT_URI, true, ContactsCO); 
@@ -218,86 +133,55 @@ public void showContactList()  {
 					ChooseContactID = mFilterList.get(arg2).mID;
 				}
 				
-				AlertDialog ListDialog = new AlertDialog.Builder(mContext).
-						setTitle(ChooseContactName).
-//		                setItems(new String[]{mContext.getString(R.string.dial), mContext.getString(R.string.deleteContact),
-//								mContext.getString(R.string.editContact)}, new DialogInterface.OnClickListener() {
-		setItems(new String[]{"dial", "deleteContact",
-		"editContact", "ShowLocation","DisShowLocation","FindHim!"}, new DialogInterface.OnClickListener() {
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		if (which == 0) {
-//									Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://" + ChooseContactNumber));
-//									mContext.startActivity(intent);
-			//parseLocation(1 + "," + 100 + "," +200 , 2);
-		} else if (which == 1) {
-			AlertDialog DeleteDialog = new AlertDialog.Builder(mContext).
-					setTitle(R.string.deleteTip).
-					setMessage(mContext.getString(R.string.deleteContact) + ChooseContactName + "?").
-					setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+				AlertDialog ListDialog = new AlertDialog.Builder(mContext). 
+		                setTitle(ChooseContactName).
+		                setItems(new String[] {mContext.getString(R.string.dial),mContext.getString(R.string.deleteContact),
+		                		mContext.getString(R.string.editContact)}, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if(which == 0)
+								{
+									Intent  intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel://" + ChooseContactNumber));
+									mContext.startActivity(intent);
+								}
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							//删除联系人操作,放在线程中处理
-							new DeleteContactTask().execute();
-						}
-					}).
-					setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-
-						}
-					}).
-					create();
-			DeleteDialog.show();
-		} else if (which == 2) {
-			Bundle bundle = new Bundle();
-			bundle.putInt("tpye", 1);
-			bundle.putString("id", ChooseContactID);
-			bundle.putString("name", ChooseContactName);
-			bundle.putString("number", ChooseContactNumber);
-
-			Intent intent = new Intent(mContext, AddContactsActivity.class);
-			intent.putExtra("person", bundle);
-			mContext.startActivity(intent);
-		} else if (which == 3) {
-			Map<String, String> track_map = new HashMap<String, String>();
-			track_map.put("userid","admin");
-			track_map.put("friendid",ChooseContactName);
-			mComm.doVolleyPost(BLConstants.API_REQ_FRIEND, track_map, Communications.TAG_QUERY_POSITION);
-			//LocationActivity.PeopleToShow.put(ChooseContactName,"400,400,"+ChooseContactName);
-//			Intent it = new Intent("show_myt")；
-//			sendBroadcast(it);
-//			Intent intent = new Intent();
-//			Bundle bundle = new Bundle();
-////			bundle.putString("strSex", strSex);
-////			bundle.putDouble("douHeight", douHeight);
-//			bundle.putInt("LocX", 400);
-//			bundle.putInt("LocY", 400);
-//			intent.setClass(mContext, LocationActivity.class);
-//			intent.putExtra("info", bundle);
-		}
-		else if (which == 4) {
-			//LocationActivity.flag_draw_myt=0;
-			LocationActivity.PeopleToShow.remove(ChooseContactName);
-//			Intent it = new Intent("show_myt")；
-//			sendBroadcast(it);
-//			Intent intent = new Intent();
-//			Bundle bundle = new Bundle();
-////			bundle.putString("strSex", strSex);
-////			bundle.putDouble("douHeight", douHeight);
-//			bundle.putInt("LocX", 400);
-//			bundle.putInt("LocY", 400);
-//			intent.setClass(mContext, LocationActivity.class);
-//			intent.putExtra("info", bundle);
-		} else if (which == 5){
-
-
-
-
-		}
-	}
+								else if(which == 1)
+								{
+									AlertDialog DeleteDialog = new AlertDialog.Builder(mContext). 
+							                setTitle(R.string.deleteTip). 
+							                setMessage(mContext.getString(R.string.deleteContact) + ChooseContactName +"?").
+							                setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+												
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+													//删除联系人操作,放在线程中处理
+													new DeleteContactTask().execute();
+												}
+											}).
+											setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
+												
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+													
+												}
+											}).
+											create(); 
+									DeleteDialog.show(); 
+								}
+								else if(which == 2)
+								{
+									Bundle bundle = new Bundle();
+									bundle.putInt("tpye", 1);
+									bundle.putString("id", ChooseContactID);
+									bundle.putString("name", ChooseContactName);
+									bundle.putString("number", ChooseContactNumber);
+									
+									Intent intent = new Intent(mContext, AddContactsActivity.class);
+									intent.putExtra("person", bundle);
+									mContext.startActivity(intent);
+								}
+							}
 						}).
 						create(); 
 					ListDialog.show(); 
@@ -333,10 +217,6 @@ public void showContactList()  {
 					m_asb.setVisibility(View.VISIBLE);
 				}
 			}
-////////////////////////////
-
-
-
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,

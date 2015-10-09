@@ -65,19 +65,26 @@ public class BaseActivity extends Activity implements
         Log.d(DEBUG_TAG, "TAG:" + tag + "--Response:" + response);
         
         //String result = HttpUtil.parseJson(response, BLConstants.ARG_REQ_RESULT);
-       //Boolean parse_result = result.equals(BLConstants.MSG_PASS);
-        onSuccess(tag,response);
+        Log.e("XXXXXXXXXXXX",response);
+        //onSuccess(tag,response);
+       if(response!=null)
 
-//        if (parse_result!=null)
-//            onSuccess(tag, response);
-//        else
-//            onFail(tag, response);
+           //Boolean parse_result = response.equals(BLConstants.MSG_PASS);
+
+           //if (parse_result)
+               onSuccess(tag, response);
+           else
+               onFail(tag, response);
+
+        //onSuccess(tag,response);
+
 
     }
 
     @Override
     public void onErrorResponse(String tag, VolleyError volleyError) {
         Log.e(DEBUG_TAG, volleyError.getMessage(), volleyError);
+
         if (tag.equals(Communications.TAG_LOGIN)
             || tag.equals(Communications.TAG_REGISTER)) {
             String notification = BLConstants.MSG_CONN_ERROR;

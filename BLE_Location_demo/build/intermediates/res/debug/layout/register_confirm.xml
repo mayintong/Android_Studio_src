@@ -72,4 +72,4 @@
             <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="提交验证码" android:background="@drawable/register_button_select" android:layout_marginTop="22dp" android:layout_marginLeft="22dp" android:layout_marginRight="22dp"/>
      </LinearLayout>
 
-</LinearLayout><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/android_test/Android_Studio_src/BLE_Location_demo/res/layout/register_confirm.xml -->
+</LinearLayout><!-- From: file:/C:/Users/mayintong/Desktop/室内定位资料/demo_lyy/Android_Studio_src/BLE_Location_demo/res/layout/register_confirm.xml -->

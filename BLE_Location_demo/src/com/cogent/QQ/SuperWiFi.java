@@ -60,7 +60,6 @@ public class SuperWiFi extends LocationActivity{
         this.wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         this.scanned = new Vector<String>();
 		/*for(int i=0;i<=AP_NUM-1;i++){
-			AP_LIST[i]="myt"+i;              //³õÊ¼»¯AP_LIST!!!
 
 
 		}*/
@@ -162,7 +161,7 @@ public class SuperWiFi extends LocationActivity{
             return false;
         try
         {
-            if(!wm.isWifiEnabled())//ÕâÀïÐÞ¸ÄÁË
+            if(!wm.isWifiEnabled())
             {
                 wm.setWifiEnabled(true);
             }
@@ -177,7 +176,7 @@ public class SuperWiFi extends LocationActivity{
             {
                 WifiConfiguration network = it.next();
 
-                if(network.SSID.equals(name))//ÕÒµ½Ö¸¶¨SSIDµÄÍøÂçºó£¬¶Ï¿ª¸ÃÍøÂç£¬ÔÙÖØÁ¬
+                if(network.SSID.equals(name))//
                 {
                     wm.disconnect();
                     wm.enableNetwork(network.networkId, true);
@@ -219,22 +218,19 @@ public class SuperWiFi extends LocationActivity{
     }
     ///
 	/*public void getAllNetWorkList(){
-		// Ã¿´Îµã»÷É¨ÃèÖ®Ç°Çå¿ÕÉÏÒ»´ÎµÄÉ¨Ãè½á¹û
 		if(sb!=null){
 			sb=new StringBuffer();
 		}
-		//¿ªÊ¼É¨ÃèÍøÂç
 		wm.startScan();
 		list=wm.getScanResults();
 		if(list!=null){
 			for(int i=0;i<list.size();i++){
-				//µÃµ½É¨Ãè½á¹û
 				mScanResult=list.get(i);
 				sb=sb.append(mScanResult.BSSID+"  ").append(mScanResult.SSID+"   ")
 						.append(mScanResult.capabilities+"   ").append(mScanResult.frequency+"   ")
 						.append(mScanResult.level+"\n\n");
 			}
-			allNetWork.setText("É¨Ãèµ½µÄwifiÍøÂç£º\n" + sb.toString());
+			allNetWork.setText("wifi\n" + sb.toString());
 		}
 	}*/
 
@@ -264,8 +260,8 @@ public class SuperWiFi extends LocationActivity{
                 }
                 p=1;
 
-                SimpleDateFormat formatter = new SimpleDateFormat ("yyyyÄêMMÔÂddÈÕ    HH:mm:ss");
-                Date curDate = new Date(System.currentTimeMillis());//»ñÈ¡µ±Ç°Ê±¼ä
+                SimpleDateFormat formatter = new SimpleDateFormat ("yyyyï¿½ï¿½MMï¿½ï¿½ddï¿½ï¿½    HH:mm:ss");
+                Date curDate = new Date(System.currentTimeMillis());//ï¿½ï¿½È¡ï¿½ï¿½Ç°Ê±ï¿½ï¿½
                 String str = formatter.format(curDate);
 
 				/*
@@ -280,7 +276,7 @@ public class SuperWiFi extends LocationActivity{
                 {
                     performScan();
 //					try {
-//						Thread.sleep(1000);//Ã¿3000É¨ÃèÒ»´Î£¬Ö±µ½³ö´í
+//						Thread.sleep(1000);//Ã¿3000É¨ï¿½ï¿½Ò»ï¿½Î£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //					} catch (InterruptedException e) {
 //						// TODO Auto-generated catch block
 //						e.printStackTrace();
@@ -349,7 +345,7 @@ public class SuperWiFi extends LocationActivity{
 				for(int kk=1;kk<=4;kk++){
 					wm.startScan();
 					try {
-						Thread.sleep(2000);//Ã¿3000É¨ÃèÒ»´Î£¬Ö±µ½³ö´í
+						Thread.sleep(2000);//Ã¿3000É¨ï¿½ï¿½Ò»ï¿½Î£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -363,7 +359,7 @@ public class SuperWiFi extends LocationActivity{
 
             //Log.i("wifi","start");
             try {
-                Thread.sleep(TIME_INTERVAL);//Ã¿TIME_INTERVALÉ¨ÃèÒ»´Î£¬Ö±µ½³ö´í
+                Thread.sleep(TIME_INTERVAL);//Ã¿TIME_INTERVALÉ¨ï¿½ï¿½Ò»ï¿½Î£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -438,11 +434,11 @@ public class SuperWiFi extends LocationActivity{
             if (!file.exists()){
                 file.createNewFile();}
 
-            // ´ò¿ªÒ»¸öËæ»ú·ÃÎÊÎÄ¼þÁ÷£¬°´¶ÁÐ´·½Ê½
+            // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½Ê½
             RandomAccessFile randomFile = new RandomAccessFile(path, "rw");
-            // ÎÄ¼þ³¤¶È£¬×Ö½ÚÊý
+            // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
             long fileLength = randomFile.length();
-            // ½«Ð´ÎÄ¼þÖ¸ÕëÒÆµ½ÎÄ¼þÎ²¡£
+            // ï¿½ï¿½Ð´ï¿½Ä¼ï¿½Ö¸ï¿½ï¿½ï¿½Æµï¿½ï¿½Ä¼ï¿½Î²ï¿½ï¿½
             randomFile.seek(fileLength);
             randomFile.writeBytes(a);
             //Log.e("!","!!");
